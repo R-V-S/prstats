@@ -1,0 +1,65 @@
+definitions:
+  errormessage.ErrorMessage:
+    properties:
+      errorType:
+        type: string
+      message:
+        type: string
+      occurredAt:
+        format: date-time
+        type: string
+    type: object
+  prstat.Aggregate:
+    properties:
+      avgApproverCount:
+        type: integer
+      avgDescription:
+        type: integer
+      avgReviewCommentCount:
+        type: integer
+      avgReviewCount:
+        type: integer
+      prCount:
+        type: integer
+    type: object
+info:
+  contact: {}
+  license: {}
+  title: PR Stats
+  version: 1.0.0
+paths:
+  /prstats/id/:id:
+    get:
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: ID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prstat.Aggregate'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errormessage.ErrorMessage'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errormessage.ErrorMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errormessage.ErrorMessage'
+      summary: Get an existing cognition by its ID
+      tags:
+      - PRStat
+swagger: "2.0"
+tags:
+- description: A PR Stat is a collection of calculated metrics about a PR or a set
+    of PRs
+  name: PR Stats

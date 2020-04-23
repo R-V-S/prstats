@@ -1,0 +1,100 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "PR Stats",
+        "contact": {},
+        "license": {},
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/prstats/id/:id": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PRStat"
+                ],
+                "summary": "Get an existing cognition by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Ticket ID",
+                        "name": "ID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/prstat.Aggregate"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errormessage.ErrorMessage"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errormessage.ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errormessage.ErrorMessage"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "errormessage.ErrorMessage": {
+            "type": "object",
+            "properties": {
+                "errorType": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "occurredAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "prstat.Aggregate": {
+            "type": "object",
+            "properties": {
+                "avgApproverCount": {
+                    "type": "integer"
+                },
+                "avgDescription": {
+                    "type": "integer"
+                },
+                "avgReviewCommentCount": {
+                    "type": "integer"
+                },
+                "avgReviewCount": {
+                    "type": "integer"
+                },
+                "prCount": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "description": "A PR Stat is a collection of calculated metrics about a PR or a set of PRs",
+            "name": "PR Stats"
+        }
+    ]
+}
